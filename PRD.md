@@ -78,8 +78,8 @@ The validator must be a separate call/pass from the generator — this is the wh
 ## 7. Technical requirements
 
 - **Framework:** Next.js (App Router), deployed to Vercel. Vercel CLI is already authenticated in this environment as `parekhkavya02-6672` — reuse that login, don't re-auth.
-- **Model calls:** Anthropic Claude API (the user already has Claude Code / Anthropic access in this environment — confirm an `ANTHROPIC_API_KEY` is available or needs to be added to `.env`/Vercel project env vars before build; do not hardcode a key in source).
-- **Architecture:** Server-side API route(s) orchestrate the 3-stage pipeline (planner → generator → validator) — never call the Anthropic API from client-side JS (key exposure). Stream or poll stage status to the frontend so the step-tracker UI (5.2/6) can show real progress, not a fake timer.
+- **Model calls:** NVIDIA NIM API (free tier), model `meta/llama-3.3-70b-instruct`, used for all three agent roles via separate calls — `NVIDIA_NIM_API_KEY` needed as a Vercel project env var (server-side only); do not hardcode a key in source. OpenAI-compatible endpoint at `https://integrate.api.nvidia.com/v1/chat/completions`.
+- **Architecture:** Server-side API route(s) orchestrate the 3-stage pipeline (planner → generator → validator) — never call the NIM API from client-side JS (key exposure). Stream or poll stage status to the frontend so the step-tracker UI (5.2/6) can show real progress, not a fake timer.
 - **No database needed** — this is stateless per-request; pre-baked examples can be static JSON shipped with the app (or generated once at build time and cached) so they load instantly with zero latency/cost on page load.
 - **Validator output must be structured** (JSON / tool-use schema: `{voiceCheck: {pass, reason}, banned_phrases: {pass, hits:[]}, accessibility: {pass, issues:[]}, verdict: string}`), not parsed from free text — makes the scorecard UI reliable.
 - Keep it small: this should be buildable as a single Next.js app, not a monorepo. Target under a day of agent build time.
@@ -107,6 +107,6 @@ The validator must be a separate call/pass from the generator — this is the wh
 
 ## 11. Open questions for the user before/at build time
 
-- Confirm `ANTHROPIC_API_KEY` availability/source for the Vercel deployment's server-side env.
-- Any preference on visual style direction (editorial vs. bento vs. dark-luxury), or leave it to the frontend-design skill's judgment?
-- Project name / URL slug preference for the Vercel deployment?
+- ~~Confirm `ANTHROPIC_API_KEY` availability/source for the Vercel deployment's server-side env.~~ Resolved: switched to NVIDIA NIM free-tier API (`NVIDIA_NIM_API_KEY`, model `meta/llama-3.3-70b-instruct`).
+- ~~Any preference on visual style direction (editorial vs. bento vs. dark-luxury), or leave it to the frontend-design skill's judgment?~~ Resolved: dark luxury.
+- ~~Project name / URL slug preference for the Vercel deployment?~~ Resolved: Verity.
