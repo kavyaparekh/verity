@@ -1,14 +1,14 @@
 # Progress — Part 2: Experience
 
-Repo: [kavyaparekh/gradial-prototype](https://github.com/kavyaparekh/gradial-prototype)
+Repo: [kavyaparekh/verity](https://github.com/kavyaparekh/verity)
 Source PRD: [PRD.md](./PRD.md)
 
 The visual layer. This is where "looks incredible in under 10 seconds" either happens or doesn't.
 
 ## Issues
 
-- [ ] [#3 — Design system + step-tracker UI (dark-luxury direction)](https://github.com/kavyaparekh/gradial-prototype/issues/3)
-- [ ] [#4 — Output rendering: page preview + governance scorecard](https://github.com/kavyaparekh/gradial-prototype/issues/4)
+- [ ] [#3 — Design system + step-tracker UI (dark-luxury direction)](https://github.com/kavyaparekh/verity/issues/3)
+- [ ] [#4 — Output rendering: page preview + governance scorecard](https://github.com/kavyaparekh/verity/issues/4)
 
 ## Dependency order
 

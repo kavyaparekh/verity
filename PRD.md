@@ -101,7 +101,7 @@ The validator must be a separate call/pass from the generator — this is the wh
 
 ## 10. Deliverables for this PRD's execution
 
-1. Next.js app source in this repo at `gradial-prototype/app/` (or sibling folder — build agent's call, keep it out of the email-content folders under `recipients/`).
+1. Next.js app source in this repo at `verity/app/` (or sibling folder — build agent's call, keep it out of the email-content folders under `recipients/`).
 2. Deployed public Vercel URL.
 3. A one-line note back to this conversation/repo with the final URL, so it can be inserted into Kavya's Gradial cold email draft (the email itself is out of scope for this PRD — that gets drafted separately via the `cold-email` skill once the recipient's name/LinkedIn is known).
 

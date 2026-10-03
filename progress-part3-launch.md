@@ -1,13 +1,13 @@
 # Progress — Part 3: Launch
 
-Repo: [kavyaparekh/gradial-prototype](https://github.com/kavyaparekh/gradial-prototype)
+Repo: [kavyaparekh/verity](https://github.com/kavyaparekh/verity)
 Source PRD: [PRD.md](./PRD.md)
 
 Seed content, attribution, deploy, and final verification against the PRD's success criteria.
 
 ## Issues
 
-- [ ] [#5 — Seed examples, attribution footer, deploy, and QA against success criteria](https://github.com/kavyaparekh/gradial-prototype/issues/5)
+- [ ] [#5 — Seed examples, attribution footer, deploy, and QA against success criteria](https://github.com/kavyaparekh/verity/issues/5)
 
 ## Dependency order
 
