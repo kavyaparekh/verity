@@ -1,11 +1,14 @@
+import { Masthead } from "@/components/masthead/Masthead";
+import { PipelineRunner } from "@/components/pipeline/PipelineRunner";
+import styles from "@/app/page.module.css";
+
 export default function Home() {
   return (
-    <main>
-      <h1>Verity</h1>
-      <p>
-        Scaffold placeholder — the agent pipeline (Planner → Generator →
-        Validator) and the real UI land in later issues.
-      </p>
+    <main className={styles.page}>
+      <div className={styles.grid}>
+        <Masthead />
+        <PipelineRunner />
+      </div>
     </main>
   );
 }
