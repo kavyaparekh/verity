@@ -1,0 +1,99 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.caption {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.paper {
+  background: var(--foreground);
+  color: var(--background);
+  border-radius: 3px;
+  padding: var(--space-lg);
+  box-shadow:
+    0 2px 0 0 color-mix(in srgb, var(--background) 8%, transparent),
+    0 24px 48px -24px rgba(0, 0, 0, 0.7);
+  animation: reveal var(--duration-normal) var(--ease-out-expo) both;
+}
+
+.imageBox {
+  aspect-ratio: 16 / 7;
+  border-radius: 2px;
+  margin-bottom: var(--space-md);
+  background: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--background) 6%, transparent),
+    color-mix(in srgb, var(--background) 6%, transparent) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  border: 1px solid color-mix(in srgb, var(--background) 16%, transparent);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.imageAlt {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: color-mix(in srgb, var(--background) 55%, transparent);
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: var(--space-xs);
+}
+
+.subhead {
+  font-size: var(--text-lg);
+  color: color-mix(in srgb, var(--background) 72%, transparent);
+  margin-bottom: var(--space-sm);
+  line-height: 1.35;
+}
+
+.body {
+  font-size: var(--text-base);
+  color: color-mix(in srgb, var(--background) 85%, transparent);
+  line-height: 1.6;
+  margin-bottom: var(--space-md);
+  max-width: 60ch;
+}
+
+.cta {
+  display: inline-block;
+  background: var(--background);
+  color: var(--foreground);
+  padding: 0.7rem 1.5rem;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .paper {
+    padding: var(--space-md);
+  }
+}

@@ -8,7 +8,7 @@ The visual layer. This is where "looks incredible in under 10 seconds" either ha
 ## Issues
 
 - [x] [#3 — Design system + step-tracker UI (dark-luxury direction)](https://github.com/kavyaparekh/verity/issues/3)
-- [ ] [#4 — Output rendering: page preview + governance scorecard](https://github.com/kavyaparekh/verity/issues/4)
+- [x] [#4 — Output rendering: page preview + governance scorecard](https://github.com/kavyaparekh/verity/issues/4)
 
 ## Dependency order
 
@@ -36,3 +36,12 @@ Part 1 (#1, #2) → #3 (shell + step tracker) → #4 (output + scorecard renderi
 - Byline/footer attribution text and links are placeholders (`href="#"`) — #5 finalizes real copy/links per PRD §4.6.
 - **Verified in-browser** (not just build/lint): ran the full pipeline live against real NIM calls at desktop width (1440px) and confirmed Planning → Drafting → Governance Check → Done each animate correctly off real backend events (not a timer), then re-verified at mobile width (390px) with no overflow or breakage. Caught and fixed one real bug this way: the "Done" stamp was stuck in the pulsing "active" ring state forever instead of settling into solid "complete" once the pipeline finished (no next stage to transition into) — fixed in `stepStatus()`.
 - Also fixed, incidentally: a hydration warning in `layout.tsx` caused by injecting design tokens as a text-node `<style>` child (fragile against browser-extension DOM injection in `<head>`) — switched to an inline `style` attribute on `<html>`, which is a more robust pattern regardless of cause.
+
+## #4 — done
+
+- `PagePreview.tsx` — the generated content rendered as a warm "paper" card (foreground-colored background, dark text — a deliberate inversion from the app's own dark chrome) with a dashed-placeholder image box showing the alt text inline, headline/subhead/body/CTA in real typographic hierarchy. Reads like an actual landing-page fragment, not a text dump.
+- `GovernanceScorecard.tsx` — stays in the dark "ledger" surface established in #3. Three rows (Brand Voice / Banned Phrases / Accessibility) each with a `PassFailChip` (green "pass" / rust "fail" / gray "reviewing") and the specific reason/hits/issues text, plus a verdict block styled like a stamped notary line (gold mono label + serif verdict sentence).
+- Staged reveal: both cards only mount once `content` exists (i.e. once the Generator stage completes); the scorecard shows a "reviewing…" pending skeleton (gray chips, in-progress copy) while `stage === "governance"` and `validation` is still null, then fills in with real pass/fail once the Validator responds. Makes the Governance Check step feel alive instead of just a pulsing stamp with nothing happening below it.
+- Removed `ResultPreview.tsx` (the #3 placeholder) now that real rendering exists.
+- **Caught and fixed a real layout bug via in-browser testing**: results were originally nested inside the narrow right-column panel (shared with the brief form), which squeezed the page-preview headline into an unreadably narrow, many-line wrap. Fixed by having `PipelineRunner` return a Fragment so the results row renders as a sibling of the panel and spans the full page grid (`grid-column: 1 / -1`) instead of being trapped in the panel's column.
+- **Verified the failure-rendering path specifically**, since the PRD treats "don't hide failures" as a hard requirement and live generation doesn't reliably fail on cue (confirmed in #2's notes). Temporarily monkey-patched `window.fetch` in the browser console to feed a synthetic SSE stream with a failing validation (3 banned phrases, missing alt text, voice-check fail) through the real rendering code — app source was never touched. Confirmed: rust "FAIL" chips, correct per-check reason text, and a "Needs a pass — ..." verdict all render clearly. Re-verified the pass case and the failure case both work correctly at mobile width (390px) too — results stack to a single column with no overflow.

@@ -6,6 +6,21 @@
   box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
 }
 
+.resultsRow {
+  grid-column: 1 / -1;
+  margin-top: var(--space-lg);
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--space-md);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .resultsRow {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 640px) {
   .panel {
     padding: var(--space-md);
