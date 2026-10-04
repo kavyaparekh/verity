@@ -1,7 +1,5 @@
 import styles from "@/components/masthead/Masthead.module.css";
 
-// Byline links are placeholders — issue #5 finalizes the real attribution
-// footer copy and links per PRD §4.6.
 export function Masthead() {
   return (
     <div className={styles.masthead}>
@@ -12,8 +10,13 @@ export function Masthead() {
         independent Validator, each visible, each doing one job.
       </p>
       <div className={styles.byline}>
-        <span>Built by Kavya Parekh</span>
-        <a href="#">Site / GitHub →</a>
+        <span>
+          Built by Kavya Parekh, because she couldn&apos;t stop thinking about Gradial&apos;s
+          Forward Deployed Engineer role.
+        </span>
+        <a href="https://github.com/kavyaparekh/verity" target="_blank" rel="noopener noreferrer">
+          View the repo →
+        </a>
       </div>
     </div>
   );
