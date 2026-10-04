@@ -21,7 +21,7 @@ Part 2 (#3, #4) → #5
 
 - One of the 2-3 seed examples must be hand-authored to fail a governance check on purpose. Static JSON, not a hopeful live model call — reliability over cleverness here.
 - Final deploy target: public Vercel URL, no login wall, loads in under ~2s.
-- Once #5 is done and deployed, report the final URL back so it can go into Kavya's Gradial cold email draft (email itself is out of scope per PRD §10.3).
+- Once #5 is done and deployed, report the final URL back so it can go into Kavya's cold email draft (email itself is out of scope per PRD §10.3).
 
 ## #5 — done
 

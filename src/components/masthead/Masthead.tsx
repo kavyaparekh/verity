@@ -11,8 +11,8 @@ export function Masthead() {
       </p>
       <div className={styles.byline}>
         <span>
-          Built by Kavya Parekh, because she couldn&apos;t stop thinking about Gradial&apos;s
-          Forward Deployed Engineer role.
+          Built by Kavya Parekh, because she couldn&apos;t stop thinking about a Forward
+          Deployed Engineer role.
         </span>
         <a href="https://github.com/kavyaparekh/verity" target="_blank" rel="noopener noreferrer">
           View the repo →

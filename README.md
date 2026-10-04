@@ -2,7 +2,7 @@
 
 Brief in. On-brand page and governance scorecard out.
 
-A miniature agentic marketing harness: a **Planner**, a **Generator**, and an independent **Validator/Governance** agent review the same piece of content, one after another, visibly. Built by Kavya Parekh to accompany a cold email to Gradial for the Forward Deployed Engineer role — see [`PRD.md`](./PRD.md) for the full spec.
+A miniature agentic marketing harness: a **Planner**, a **Generator**, and an independent **Validator/Governance** agent review the same piece of content, one after another, visibly. Built by Kavya Parekh to accompany a cold email for a Forward Deployed Engineer role — see [`PRD.md`](./PRD.md) for the full spec.
 
 ## Status
 
