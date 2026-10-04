@@ -16,7 +16,12 @@ const SYSTEM_PROMPT = `You are the independent Validator/Governance agent in a m
 {"voiceCheck": {"pass": boolean, "reason": string}, "verdict": string}
 The verdict should read like a real governance call: either "Ships as-is" with a one-line reason, or a specific note on what would block shipping (tone, a banned phrase, an accessibility gap). Be concrete, not generic.`;
 
-export async function runValidator(content: Content, brandVoice: string): Promise<ValidatorResult> {
+export interface ValidatorRunResult {
+  validation: ValidatorResult;
+  reasoning: string | null;
+}
+
+export async function runValidator(content: Content, brandVoice: string): Promise<ValidatorRunResult> {
   const combinedText = [content.headline, content.subhead, content.body, content.cta].join(" ");
   const bannedPhrases = checkBannedPhrases(combinedText);
   const accessibility = checkAccessibility(content);
@@ -30,12 +35,14 @@ Deterministic findings already computed (incorporate these into your verdict, do
 - Banned phrase check: ${bannedPhrases.pass ? "pass" : `FAIL, hits: ${bannedPhrases.hits.join(", ")}`}
 - Accessibility check: ${accessibility.pass ? "pass" : `FAIL, issues: ${accessibility.issues.join("; ")}`}`;
 
-  const { voiceCheck, verdict } = await callNimForJson(SYSTEM_PROMPT, userPrompt, voiceAndVerdictSchema);
+  const { data, reasoning } = await callNimForJson(SYSTEM_PROMPT, userPrompt, voiceAndVerdictSchema);
 
-  return validatorSchema.parse({
-    voiceCheck,
+  const validation = validatorSchema.parse({
+    voiceCheck: data.voiceCheck,
     bannedPhrases,
     accessibility,
-    verdict,
+    verdict: data.verdict,
   });
+
+  return { validation, reasoning };
 }

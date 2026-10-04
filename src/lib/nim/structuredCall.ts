@@ -3,6 +3,11 @@ import { callNim, type NimMessage } from "@/lib/nim/client";
 
 const MAX_ATTEMPTS = 2;
 
+export interface StructuredResult<T> {
+  data: T;
+  reasoning: string | null;
+}
+
 function extractJson(text: string): unknown {
   const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/i);
   const candidate = fenced ? fenced[1] : text;
@@ -20,7 +25,7 @@ export async function callNimForJson<T>(
   systemPrompt: string,
   userPrompt: string,
   schema: z.ZodType<T>,
-): Promise<T> {
+): Promise<StructuredResult<T>> {
   const messages: NimMessage[] = [
     { role: "system", content: systemPrompt },
     { role: "user", content: userPrompt },
@@ -29,13 +34,13 @@ export async function callNimForJson<T>(
   let lastError = "";
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt += 1) {
-    const raw = await callNim(messages);
+    const { content: raw, reasoning } = await callNim(messages);
 
     try {
       const parsed = extractJson(raw);
       const result = schema.safeParse(parsed);
       if (result.success) {
-        return result.data;
+        return { data: result.data, reasoning };
       }
       lastError = result.error.message;
     } catch (error) {

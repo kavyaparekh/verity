@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import type { Content, Plan, ValidatorResult } from "@/lib/schemas";
+import type { Content, Plan, StageReasoning, ValidatorResult } from "@/lib/schemas";
 
 export type PipelineStage = "idle" | "planning" | "drafting" | "governance" | "done";
 
@@ -8,6 +8,7 @@ interface PipelineState {
   plan: Plan | null;
   content: Content | null;
   validation: ValidatorResult | null;
+  reasoning: StageReasoning;
   failed: boolean;
   errorMessage: string | null;
 }
@@ -17,6 +18,7 @@ interface StageEvent {
   plan?: Plan;
   content?: Content;
   validation?: ValidatorResult;
+  reasoning?: StageReasoning;
   message?: string;
 }
 
@@ -25,6 +27,7 @@ const INITIAL_STATE: PipelineState = {
   plan: null,
   content: null,
   validation: null,
+  reasoning: {},
   failed: false,
   errorMessage: null,
 };
@@ -80,6 +83,7 @@ export function usePipelineStream() {
           plan: event.plan ?? prev.plan,
           content: event.content ?? prev.content,
           validation: event.validation ?? prev.validation,
+          reasoning: { ...prev.reasoning, ...event.reasoning },
         }));
       }
     }

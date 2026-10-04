@@ -1,0 +1,48 @@
+.panel {
+  margin-top: var(--space-sm);
+  border: 1px dashed var(--border-strong);
+  border-radius: 2px;
+  background: var(--surface);
+  padding: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  animation: reveal var(--duration-fast) var(--ease-out-expo) both;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.stageLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.stageText {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.stageEmpty {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--border-strong);
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

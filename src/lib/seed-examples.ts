@@ -1,4 +1,4 @@
-import type { Content, Plan, ValidatorResult } from "@/lib/schemas";
+import type { Content, Plan, StageReasoning, ValidatorResult } from "@/lib/schemas";
 
 export interface SeedExample {
   id: string;
@@ -8,6 +8,7 @@ export interface SeedExample {
   plan: Plan;
   content: Content;
   validation: ValidatorResult;
+  reasoning: StageReasoning;
 }
 
 // Hand-authored, not replayed from a live run. One (enterprise-analytics)
@@ -45,6 +46,11 @@ export const SEED_EXAMPLES: SeedExample[] = [
       accessibility: { pass: true, issues: [] },
       verdict: "Ships as-is — confident, warm tone with specific product details and no jargon.",
     },
+    reasoning: {
+      planner: "The brief asks for energetic but premium, not loud. I'll anchor the headline on a season cue (autumn) paired with the discount, then back it with concrete product facts — materials, fit, shipping terms — rather than adjectives, since the brand voice explicitly wants specific over generic.",
+      generator: "Keeping sentences short and concrete. Leading with the discount and season in the headline covers the offer immediately. The body needs to earn 'premium' through material specifics (engineered mesh, responsive foam) instead of claims like 'amazing' or 'best ever'. Checking the CTA reads energetic without an exclamation point, since the voice says confident, not shouty.",
+      validator: "Scanning the copy against the brand voice line by line: no hype adjectives present, every claim ties to a specific feature or policy (discount %, shipping threshold, return window). Deterministic checks already came back clean, so my job is just judging tone fit — this reads premium through specificity, not through superlatives, which is exactly what was asked for.",
+    },
   },
   {
     id: "coffee-loyalty",
@@ -76,6 +82,11 @@ export const SEED_EXAMPLES: SeedExample[] = [
       bannedPhrases: { pass: true, hits: [] },
       accessibility: { pass: true, issues: [] },
       verdict: "Ships as-is — warm, specific, and easy to act on.",
+    },
+    reasoning: {
+      planner: "Playful but warm, not silly — the mechanic itself (every five deliveries) is inherently fun, so I don't need to force jokes into the copy. Leading with the loyalty mechanic rather than the word 'loyalty program', since that phrase itself tends to read corporate.",
+      generator: "Avoiding the phrase 'loyalty program' entirely in the headline — it's exactly the kind of label the brand voice would flag as generic. Describing what members actually get (free bag cadence, early access, grinder-specific guides) does more work than naming the program type. Kept the body to mechanics only, no filler sentence before getting to the point.",
+      validator: "Checking for playfulness without looking unserious: 'actually tastes like one' is the only departure from strictly literal copy, and it's grounded in the product category, not a forced pun. Mechanics are specific throughout. No banned phrases, no jargon — this reads like a real subscription update, not a template.",
     },
   },
   {
@@ -123,6 +134,11 @@ export const SEED_EXAMPLES: SeedExample[] = [
       },
       accessibility: { pass: false, issues: ["Missing alt text for the image placeholder."] },
       verdict: "Needs a pass — this reads like generic enterprise marketing, not specific copy. Banned phrases throughout, no concrete product detail, and the image placeholder has no alt text.",
+    },
+    reasoning: {
+      planner: "The brief says 'make it sound impressive' for an enterprise audience. I should be careful here — impressive and generic-corporate are not the same thing, but the plan itself is just structure, so I'll keep key points concrete (real-time dashboards, anomaly detection, role-based access, deploy time) and leave tone execution to the next stage.",
+      generator: "Leaning into 'impressive' for an enterprise buyer, drawing on how this category typically talks about itself — fast, best-in-class, transformative. Didn't carry the plan's concrete details (dashboards, anomaly detection, deploy time) into the actual copy, and skipped the image alt text since the focus was on the headline impact.",
+      validator: "This doesn't match the stated brand voice at all — 'confident and warm' and 'no corporate jargon, ever' are both violated immediately. None of the Planner's concrete details (real-time dashboards, role-based access, under-a-week deploy) made it into the final copy; it's all superlatives instead. Running the banned-phrase list confirms it: eleven hits. Alt text is also missing. This is exactly the kind of draft that should not ship without a pass.",
     },
   },
 ];

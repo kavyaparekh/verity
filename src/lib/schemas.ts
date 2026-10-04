@@ -42,3 +42,9 @@ export const generateRequestSchema = z.object({
 });
 
 export type GenerateRequest = z.infer<typeof generateRequestSchema>;
+
+export interface StageReasoning {
+  planner?: string | null;
+  generator?: string | null;
+  validator?: string | null;
+}

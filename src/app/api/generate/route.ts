@@ -28,15 +28,26 @@ export async function POST(request: Request) {
 
       try {
         send({ stage: "planning" });
-        const plan = await runPlanner(brief, brandVoice);
+        const { plan, reasoning: plannerReasoning } = await runPlanner(brief, brandVoice);
 
-        send({ stage: "drafting", plan });
-        const content = await runGenerator(plan, brandVoice);
+        send({ stage: "drafting", plan, reasoning: { planner: plannerReasoning } });
+        const { content, reasoning: generatorReasoning } = await runGenerator(plan, brandVoice);
 
-        send({ stage: "governance", plan, content });
-        const validation = await runValidator(content, brandVoice);
+        send({
+          stage: "governance",
+          plan,
+          content,
+          reasoning: { planner: plannerReasoning, generator: generatorReasoning },
+        });
+        const { validation, reasoning: validatorReasoning } = await runValidator(content, brandVoice);
 
-        send({ stage: "done", plan, content, validation });
+        send({
+          stage: "done",
+          plan,
+          content,
+          validation,
+          reasoning: { planner: plannerReasoning, generator: generatorReasoning, validator: validatorReasoning },
+        });
       } catch (error) {
         send({ stage: "error", message: getErrorMessage(error) });
       } finally {

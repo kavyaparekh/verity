@@ -6,12 +6,17 @@ export interface NimMessage {
   content: string;
 }
 
+export interface NimResponse {
+  content: string;
+  reasoning: string | null;
+}
+
 export class NimApiError extends Error {}
 
 export async function callNim(
   messages: NimMessage[],
   options: { temperature?: number; maxTokens?: number } = {},
-): Promise<string> {
+): Promise<NimResponse> {
   const apiKey = process.env.NVIDIA_NIM_API_KEY;
   if (!apiKey) {
     throw new NimApiError("NVIDIA_NIM_API_KEY is not configured");
@@ -39,13 +44,13 @@ export async function callNim(
   }
 
   const data = (await response.json()) as {
-    choices?: { message?: { content?: string } }[];
+    choices?: { message?: { content?: string; reasoning_content?: string } }[];
   };
 
-  const content = data.choices?.[0]?.message?.content;
-  if (!content) {
+  const message = data.choices?.[0]?.message;
+  if (!message?.content) {
     throw new NimApiError("NIM response had no message content");
   }
 
-  return content;
+  return { content: message.content, reasoning: message.reasoning_content ?? null };
 }

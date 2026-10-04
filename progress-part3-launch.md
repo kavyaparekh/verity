@@ -46,3 +46,12 @@ Part 2 (#3, #4) → #5
 - [x] Doesn't look like a hackathon page — committed "notary ledger" direction via the `frontend-design` skill (#3), not a generic template.
 
 All 5 issues across all 3 parts are now closed. Project complete.
+
+## Post-launch addition — Reasoning toggle
+
+Requested after launch: a developer-facing "Reasoning" toggle that surfaces what each agent was actually thinking at every step, not just its final output.
+
+- NIM's `nvidia/nemotron-3-ultra-550b-a55b` is a reasoning model and already returns its chain-of-thought in a separate `reasoning_content` field on every response — previously discarded in `src/lib/nim/client.ts`, now threaded through `structuredCall.ts` → `planner.ts`/`generator.ts`/`validator.ts` → the SSE route → `usePipelineStream` as a `StageReasoning` object (`{planner, generator, validator}`), accumulated progressively as each stage completes.
+- UI: `ReasoningToggle.tsx` (off by default, so it never competes with the primary 10-second demo) reveals `ReasoningPanel.tsx` — a dashed-border mono panel showing each stage's raw reasoning text, with a "— not yet run —" placeholder for stages that haven't completed yet.
+- Seed examples got hand-authored `reasoning` text per stage too, so the toggle behaves identically whether in example mode or live mode — no dead UI. The enterprise-analytics (failing) example's reasoning specifically shows *how* it drifted into generic hype despite a plan with concrete details, and how the Validator caught it — makes the governance thesis more legible, not just the pass/fail outcome.
+- Verified live in-browser: watched real `reasoning_content` stream in stage-by-stage against an actual NIM call (not mocked), confirmed the panel correctly resets to empty on a fresh run and doesn't leak example reasoning into live runs. Checked at both desktop and mobile widths.
